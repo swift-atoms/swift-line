@@ -1,9 +1,3 @@
-/// An anchored line parameterization with a nonzero displacement direction.
-///
-/// Equality compares the anchor and direction, not the geometric point set.
-/// Scaling or reversing the direction changes the parameterization. The point
-/// and displacement types retain their domain identity. A supplied affine and
-/// scalar-action relationship gives this representation its geometric meaning.
 public struct Line<Point, Displacement: AdditiveArithmetic> {
     public var point: Point
     public let direction: Displacement
@@ -18,15 +12,12 @@ public struct Line<Point, Displacement: AdditiveArithmetic> {
         self.direction = direction
     }
 
-    /// Change the parameter-zero anchor while preserving its direction.
     public func anchored(at point: Point) -> Self {
         var result = self
         result.point = point
         return result
     }
 
-    /// Evaluate using the domain's explicit translation and scalar action.
-    /// The operation receives the anchor, direction, and unrestricted parameter.
     public func point<Parameter, Failure: Swift.Error>(
         at parameter: Parameter,
         using evaluate: (Point, Displacement, Parameter) throws(Failure) -> Point
