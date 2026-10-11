@@ -2,7 +2,7 @@ public struct Line<Point, Displacement: AdditiveArithmetic> {
     public var point: Point
     public let direction: Displacement
 
-    public enum ValidationError: Swift.Error, Equatable {
+    public enum ValidationError: Swift::Error, Equatable {
         case zeroDirection
     }
 
@@ -11,14 +11,16 @@ public struct Line<Point, Displacement: AdditiveArithmetic> {
         self.point = point
         self.direction = direction
     }
+}
 
+extension Line {
     public func anchored(at point: Point) -> Self {
         var result = self
         result.point = point
         return result
     }
 
-    public func point<Parameter, Failure: Swift.Error>(
+    public func point<Parameter, Failure: Swift::Error>(
         at parameter: Parameter,
         using evaluate: (Point, Displacement, Parameter) throws(Failure) -> Point
     ) throws(Failure) -> Point {
