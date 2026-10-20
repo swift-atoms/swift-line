@@ -33,23 +33,25 @@ extension Line: Hashable where Point: Hashable, Displacement: Hashable {}
 extension Line: Sendable where Point: Sendable, Displacement: Sendable {}
 
 #if !hasFeature(Embedded)
-extension Line {
-    private enum CodingKeys: String, CodingKey { case point, direction }
-}
-
-extension Line: Encodable where Point: Encodable, Displacement: Encodable {}
-extension Line: Decodable where Point: Decodable, Displacement: Decodable {
-    public init(from decoder: any Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        let point = try values.decode(Point.self, forKey: .point)
-        let direction = try values.decode(Displacement.self, forKey: .direction)
-        guard direction != .zero else {
-            throw DecodingError.dataCorruptedError(
-                forKey: .direction, in: values, debugDescription: "A line direction must be nonzero."
-            )
-        }
-        self.point = point
-        self.direction = direction
+    extension Line {
+        private enum CodingKeys: String, CodingKey { case point, direction }
     }
-}
+
+    extension Line: Encodable where Point: Encodable, Displacement: Encodable {}
+    extension Line: Decodable where Point: Decodable, Displacement: Decodable {
+        public init(from decoder: any Decoder) throws {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+            let point = try values.decode(Point.self, forKey: .point)
+            let direction = try values.decode(Displacement.self, forKey: .direction)
+            guard direction != .zero else {
+                throw DecodingError.dataCorruptedError(
+                    forKey: .direction,
+                    in: values,
+                    debugDescription: "A line direction must be nonzero."
+                )
+            }
+            self.point = point
+            self.direction = direction
+        }
+    }
 #endif

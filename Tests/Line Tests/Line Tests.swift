@@ -1,6 +1,6 @@
+import Foundation
 import Line
 import Testing
-import Foundation
 
 @Suite struct `Line parameterization contracts` {
     @Test func `Zero directions are rejected including negative floating zero`() {
