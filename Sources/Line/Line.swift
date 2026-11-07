@@ -2,16 +2,14 @@ public struct Line<Point, Displacement: AdditiveArithmetic> {
     public var point: Point
     public let direction: Displacement
 
+    public enum ValidationError: Swift::Error, Equatable {
+        case zeroDirection
+    }
+
     public init(point: Point, direction: Displacement) throws(ValidationError) {
         guard direction != .zero else { throw .zeroDirection }
         self.point = point
         self.direction = direction
-    }
-}
-
-extension Line {
-    public enum ValidationError: Swift::Error, Equatable {
-        case zeroDirection
     }
 }
 
